@@ -11,7 +11,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  justify-content: center; /* Poravnanje kartica na sredinu */
+  justify-content: center; 
 }
 
 .recipe-card {

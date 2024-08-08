@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './AddRecipe.css';
-
-interface Recipe {
-  title: string;
-  description: string;
-  ingredients: string;
-  steps: string;
-  authorId: number;
-  categoryId: number;
-}
+import './AddRecipe.css'; 
 
 interface AddRecipeProps {
   onClose: () => void;
-  onSave: (recipe: Recipe) => Promise<void>;
-  initialValues?: Recipe; // Dodajte ovaj prop
+  onSave: (recipe: { title: string; description: string; ingredients: string; steps: string; authorId: number; categoryId: number }) => void;
+  initialValues?: {
+    title: string;
+    description: string;
+    ingredients: string;
+    steps: string;
+    authorId: number;
+    categoryId: number;
+  };
 }
 
 const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues }) => {
@@ -21,8 +19,8 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues })
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [authorId] = useState<number>(Number(localStorage.getItem('userId')) || 1);
-  const [categoryId] = useState<number>(2); // Primer categoryId
+  const [authorId, setAuthorId] = useState<number>(1); // Default value
+  const [categoryId, setCategoryId] = useState<number>(2); // Default value
 
   useEffect(() => {
     if (initialValues) {
@@ -30,7 +28,8 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues })
       setDescription(initialValues.description);
       setIngredients(initialValues.ingredients);
       setSteps(initialValues.steps);
-      // Ako je potrebno, postavite `authorId` i `categoryId` iz `initialValues`
+      setAuthorId(initialValues.authorId);
+      setCategoryId(initialValues.categoryId);
     }
   }, [initialValues]);
 
@@ -58,7 +57,7 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues })
         Steps:
         <textarea value={steps} onChange={(e) => setSteps(e.target.value)} />
       </label>
-      <button className="save-button" onClick={handleSubmit}>{initialValues ? 'Save Changes' : 'Save'}</button>
+      <button className="save-button" onClick={handleSubmit}>Save</button>
       <button className="cancel-button" onClick={onClose}>Close</button>
     </div>
   );

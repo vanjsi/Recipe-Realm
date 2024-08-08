@@ -11,8 +11,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  justify-content: center; /* Poravnanje kartica na sredinu */
-}
+  justify-content: center; 
 
 .recipe-card {
   border: 1px solid black;
@@ -20,4 +19,5 @@
   padding: 16px;
   max-width: 300px;
   background-color: #bdbaba;
+ }
 }

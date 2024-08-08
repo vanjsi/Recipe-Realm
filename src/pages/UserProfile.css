@@ -28,7 +28,7 @@
   gap: 20px;
 }
 
-/* Stilovi za kartice */
+
 .card {
   background-color: #dbd7d7;
   padding: 20px;
@@ -52,7 +52,7 @@
   margin-top: 10px;
 }
 
-/* Kontejner za dugmadi unutar kartice */
+
 .card-details {
   display: flex;
   justify-content: space-between;
@@ -83,8 +83,8 @@
   border: none;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 14px; /* Ako želite uniformni font-size */
-  transition: background-color 0.3s, color 0.3s; /* Glatka promena boje */
+  font-size: 14px; 
+  transition: background-color 0.3s, color 0.3s; 
 }
 
 .my-recipes-button:hover {
@@ -100,7 +100,7 @@
   border: none;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 14px; /* Ako želite uniformni font-size */
+  font-size: 14px; 
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -111,8 +111,8 @@
 
 
 .active {
-  background-color: #033468; /* Tamniji plavi za aktivno dugme */
-  color: white; /* Ako želite da aktivno dugme ima drugačiju boju teksta */
+  background-color: #033468; 
+  color: white; 
 }
 
 
@@ -187,7 +187,7 @@
   font-weight: bold;
 }
 
-/* Stil za dugmad */
+
 
 
 .message {

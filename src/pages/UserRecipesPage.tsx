@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
-import './UserRecipesPage.css'; // Import the CSS file for styling
+import './UserRecipesPage.css'; 
 
 interface Author {
   id: number;

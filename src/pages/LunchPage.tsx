@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './LunchPage.css'; // Uključite CSS fajl
+import './LunchPage.css'; 
 import RecipeCard from '../components/RecipeCard';
 
 interface Recipe {
@@ -31,7 +31,7 @@ const LunchPage: React.FC = () => {
       try {
         const response = await axios.get('/recipes');
         const allRecipes = response.data;
-        const lunchRecipes = allRecipes.filter((recipe: Recipe) => recipe.categoryId === 2); // assuming categoryId for "lunch" is 2
+        const lunchRecipes = allRecipes.filter((recipe: Recipe) => recipe.categoryId === 2); 
         setRecipes(lunchRecipes);
       } catch (error) {
         console.error('Error fetching recipes:', error);

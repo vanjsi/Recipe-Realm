@@ -7,9 +7,9 @@
     font-size: 1rem;
     border: 2px solid #ccc;
     box-sizing: border-box;
-    flex: 1 1 300px; /* Fleksibilna širina sa minimalnom širinom */
-    max-width: 300px; /* Maksimalna širina kartice */
-    margin: 10px; /* Razmak između kartica */
+    flex: 1 1 300px; 
+    max-width: 300px; 
+    margin: 10px; 
   }
   
   

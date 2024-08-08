@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import axios from 'axios';
-import './BreakfastPage.css'; // Možete koristiti iste stilove kao u AllRecipes.css
+import './BreakfastPage.css'; 
 
 interface Recipe {
   id: number;

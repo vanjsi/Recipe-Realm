@@ -57,7 +57,6 @@ const UserProfile: React.FC = () => {
 
       const myRecipesData = await myRecipesResponse.json();
       const favoriteRecipesData = await favoriteRecipesResponse.json();
-
       setMyRecipes(myRecipesData);
       setFavoriteRecipes(favoriteRecipesData);
     } catch (error) {
@@ -223,8 +222,8 @@ const UserProfile: React.FC = () => {
   };
 
   const handleShowAddRecipe = () => {
-    setEditingRecipe(null); // Resetovanje editingRecipe na null
-    setShowModal(true);     // Otvorite modal za dodavanje recepta
+    setEditingRecipe(null); 
+    setShowModal(true);    
   };
 
   const handleShowEditRecipe = (recipe: Recipe) => {
@@ -337,6 +336,7 @@ const UserProfile: React.FC = () => {
             } : undefined}
           />
         )}
+
       </div>
     </div>
   );

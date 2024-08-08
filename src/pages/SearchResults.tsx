@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, Link } from 'react-router-dom';
 import './SearchResults.css';
+import RecipeCard from '../components/RecipeCard';
 
 interface Recipe {
   id: number;
@@ -20,7 +21,9 @@ const SearchResults: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const query = new URLSearchParams(useLocation().search).get('query') || '';
-
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [failureMessage, setFailureMessage] = useState<string | null>(null);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Set<number>>(new Set());
   const isLoggedIn = !!localStorage.getItem('jwtToken');
   const location = useLocation();
 
@@ -82,30 +85,25 @@ const SearchResults: React.FC = () => {
   }
 
   return (
-    <div className="all-recipes">
-      {recipes.length > 0 ? (
-        recipes.map((recipe) => (
-          <div className="card" key={recipe.id}>
-            <h3 className="card-title">
-              <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-            </h3>
-            <p className="card-description">{recipe.description}</p>
-            <div className="card-details">
-              <Link to={`/profile/${recipe.author.id}`} className="author-link">
-                {recipe.author.name}
-              </Link>
-              <p>{new Date(recipe.createdAt).toLocaleDateString()}</p>
-            </div>
-            {isLoggedIn && (
-              <button className="favorite-button" onClick={() => handleAddFavorite(recipe.id)}>
-                Add to Favorites
-              </button>
-            )}
-          </div>
-        ))
-      ) : (
-        <div>No recipes found for this category.</div>
-      )}
+    <div className="breakfast-page">
+      <h1>Results</h1>
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      {failureMessage && <div className="error-message">{failureMessage}</div>}
+      <div className="recipe-card-container">
+        {recipes.length > 0 ? (
+          recipes.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              onAddFavorite={handleAddFavorite}
+              isFavorite={favoriteRecipes.has(recipe.id)}
+              isLoggedIn={isLoggedIn}
+            />
+          ))
+        ) : (
+          <div>No recipes found for this category.</div>
+        )}
+      </div>
     </div>
   );
 };
