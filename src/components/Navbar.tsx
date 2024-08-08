@@ -33,9 +33,13 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
       <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/recipes">All Recipes</Link></li>
-        <li><Link to="/categories">Categories</Link></li>
+        <li><Link to="/">All Recipes</Link></li>
+        <li><Link to="/breakfast">Breakfast</Link></li>
+        <li><Link to="/lunch">Lunch</Link></li>
+        <li><Link to="/dinner">Dinner</Link></li>
+        <li><Link to="/drink">Drink</Link></li>
+        <li><Link to="/dessert">Dessert</Link></li>
+        <li><Link to="/pasta">Pasta</Link></li>
         {isLoggedIn && userId && (
           <li><Link to="/profile">My Profile</Link></li>
         )}

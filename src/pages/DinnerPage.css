@@ -1,0 +1,23 @@
+.dessert-page {
+  padding: 20px;
+}
+
+.dessert-page h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.recipe-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center; /* Poravnanje kartica na sredinu */
+}
+
+.recipe-card {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 300px;
+  background-color: #bdbaba;
+}

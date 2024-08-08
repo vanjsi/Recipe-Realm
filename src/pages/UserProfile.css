@@ -1,0 +1,227 @@
+.user-profile {
+  display: flex;
+  margin: 20px;
+}
+
+.left-sidebar, .right-sidebar {
+  background-color: white;
+  width: 200px;
+  padding: 20px;
+}
+
+.left-sidebar {
+  margin-right: 20px;
+}
+
+.right-sidebar {
+  margin-left: 20px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.recipe-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Stilovi za kartice */
+.card {
+  background-color: #dbd7d7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+.card-description {
+  margin-top: 10px;
+}
+
+/* Kontejner za dugmadi unutar kartice */
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.add-recipe-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #4e9aeb;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.add-recipe-button:hover {
+  background-color: #033468;
+  color: white;
+}
+
+.my-recipes-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #4e9aeb;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px; /* Ako želite uniformni font-size */
+  transition: background-color 0.3s, color 0.3s; /* Glatka promena boje */
+}
+
+.my-recipes-button:hover {
+  background-color: #033468;
+  color: white;
+}
+
+.favorite-recipes-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #4e9aeb;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px; /* Ako želite uniformni font-size */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.favorite-recipe-button:hover {
+  background-color: #033468;
+  color: white;
+}
+
+
+.active {
+  background-color: #033468; /* Tamniji plavi za aktivno dugme */
+  color: white; /* Ako želite da aktivno dugme ima drugačiju boju teksta */
+}
+
+
+
+.edit-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #068b33;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #03520a;
+  color: white;
+}
+
+.delete-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #cc3c3c;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button:hover {
+  background-color: #c50808;
+  color: white;
+}
+
+.favorite-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #0d61bb;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.favorite-button:hover {
+  background-color: #033468;
+  color: white;
+}
+
+.remove-button{
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #cc3c3c;
+  color: rgb(18, 18, 19);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-button:hover {
+  background-color: #c50808;
+  color: white;
+}
+
+.author-link {
+  color: #033468;
+  text-decoration: none;
+}
+
+.author-link:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Stil za dugmad */
+
+
+.message {
+  color: green;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.active {
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+.notification {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 16px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  width: 300px;
+}
+
+.notification.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.notification.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}

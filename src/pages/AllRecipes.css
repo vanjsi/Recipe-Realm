@@ -58,4 +58,17 @@
 
 .favorite-button:hover {
   background-color: #033468;
+  color: white;
+}
+
+.success-message {
+  color: green;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 10px;
 }

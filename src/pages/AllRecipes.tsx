@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import RecipeCard from '../components/RecipeCard';
 import './AllRecipes.css';
 
 interface Author {
@@ -12,9 +13,7 @@ interface Recipe {
   title: string;
   description: string;
   author: Author;
-  date: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 const AllRecipes: React.FC = () => {
@@ -22,7 +21,9 @@ const AllRecipes: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filteredCategory, setFilteredCategory] = useState<number | null>(null);
-
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [failureMessage, setFailureMessage] = useState<string | null>(null);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Set<number>>(new Set());
   const isLoggedIn = !!localStorage.getItem('jwtToken');
   const currentUserId = localStorage.getItem('userId');
   const location = useLocation();
@@ -62,30 +63,52 @@ const AllRecipes: React.FC = () => {
   }, [location.search]);
 
   const handleAddFavorite = async (recipeId: number) => {
-    try {
-      const token = localStorage.getItem('jwtToken');
-      if (!token) {
-        throw new Error('No token found');
-      }
-  
-      const response = await fetch('/recipes/favorite', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ recipeId }),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Failed to add favorite recipe: ${response.statusText}`);
-      }
-  
-      console.log('Recipe added to favorites');
-    } catch (error) {
-      console.error('Failed to add favorite recipe:', error);
+  try {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('No token found');
     }
-  };
+
+    // Proveri da li je recept već u omiljenima
+    if (favoriteRecipes.has(recipeId)) {
+      setFailureMessage('Recipe is already in your favorites.');
+      setSuccessMessage(null);
+      return;
+    }
+
+    const response = await fetch('/recipes/favorite', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ recipeId }),
+    });
+
+    if (response.status === 409) { // 409 Conflict ili status koji server vraća za već postojeći recept
+      setFailureMessage('That recipe is already in your favorites.');
+      setSuccessMessage(null);
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to add favorite recipe: ${response.statusText}`);
+    }
+
+    setFavoriteRecipes(prev => {
+      const updatedFavorites = new Set(prev);
+      updatedFavorites.add(recipeId);
+      return updatedFavorites;
+    });
+    setSuccessMessage('Recipe added to favorites successfully!');
+    setFailureMessage(null);
+  } catch (error) {
+    setFailureMessage('Failed to add recipe to favorites.');
+    setSuccessMessage(null);
+    console.error('Failed to add favorite recipe:', error);
+  }
+};
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -97,31 +120,17 @@ const AllRecipes: React.FC = () => {
 
   return (
     <div className="all-recipes">
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      {failureMessage && <div className="error-message">{failureMessage}</div>}
       {recipes.length > 0 ? (
         recipes.map((recipe) => (
-          <div className="card" key={recipe.id}>
-            <h3 className="card-title">
-              <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-            </h3>
-            <p className="card-description">{recipe.description}</p>
-            <div className="card-details">
-              <Link to={`/profile/${recipe.author.id}`} className="author-link">
-                {recipe.author.name}
-              </Link>
-              <p>{new Date(recipe.createdAt).toLocaleDateString()}</p>
-            </div>
-            {isLoggedIn && (
-              <button className="favorite-button" onClick={() => handleAddFavorite(recipe.id)}>
-                Add to Favorites
-              </button>
-            )}
-            {recipe.author.id.toString() === currentUserId && (
-              <div>
-                <button onClick={() => alert('Edit recipe functionality')}>Edit</button>
-                <button onClick={() => alert('Delete recipe functionality')}>Delete</button>
-              </div>
-            )}
-          </div>
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            onAddFavorite={handleAddFavorite}
+            isFavorite={favoriteRecipes.has(recipe.id)}
+            isLoggedIn={isLoggedIn}
+          />
         ))
       ) : (
         <div>No recipes found for this category.</div>
