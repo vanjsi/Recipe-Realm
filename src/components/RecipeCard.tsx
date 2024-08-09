@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaRegHeart, FaHeart } from 'react-icons/fa'; 
+
 import './RecipeCard.css';
 
 interface Recipe {
@@ -16,11 +18,12 @@ interface Recipe {
 interface RecipeCardProps {
   recipe: Recipe;
   onAddFavorite?: (recipeId: number) => void;
+  onRemoveFavorite?: (recipeId: number) => void;
   isFavorite?: boolean;
   isLoggedIn: boolean;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onAddFavorite, isFavorite, isLoggedIn }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onAddFavorite, onRemoveFavorite, isFavorite, isLoggedIn }) => {
   return (
     <div className="card">
       <h3 className="card-title">
@@ -33,10 +36,13 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onAddFavorite, isFavori
         </Link>
         <p>{new Date(recipe.createdAt).toLocaleDateString()}</p>
       </div>
-      {isLoggedIn && onAddFavorite && (
-        <button className="favorite-button" onClick={() => onAddFavorite(recipe.id)}>
-          {isFavorite ? 'Already in Favorites' : 'Add to Favorites'}
-        </button>
+      {isLoggedIn && (
+        <div
+          className={`favorite-icon ${isFavorite ? 'favorite' : ''}`}
+          onClick={() => isFavorite ? onRemoveFavorite?.(recipe.id) : onAddFavorite?.(recipe.id)}
+        >
+          {isFavorite ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
+        </div>
       )}
     </div>
   );

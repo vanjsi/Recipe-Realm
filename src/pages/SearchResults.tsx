@@ -57,6 +57,13 @@ const SearchResults: React.FC = () => {
         throw new Error('No token found');
       }
 
+
+      if (favoriteRecipes.has(recipeId)) {
+        setFailureMessage('Recipe is already in your favorites.');
+        setSuccessMessage(null);
+        return;
+      }
+
       const response = await fetch('/recipes/favorite', {
         method: 'POST',
         headers: {
@@ -70,8 +77,17 @@ const SearchResults: React.FC = () => {
         throw new Error(`Failed to add favorite recipe: ${response.statusText}`);
       }
 
+      setFavoriteRecipes(prev => {
+        const updatedFavorites = new Set(prev);
+        updatedFavorites.add(recipeId);
+        return updatedFavorites;
+      });
+      setSuccessMessage('Recipe added to favorites successfully!');
+      setFailureMessage(null);
       console.log('Recipe added to favorites');
     } catch (error) {
+      setFailureMessage('Failed to add recipe to favorites.');
+      setSuccessMessage(null);
       console.error('Failed to add favorite recipe:', error);
     }
   };
@@ -85,7 +101,7 @@ const SearchResults: React.FC = () => {
   }
 
   return (
-    <div className="breakfast-page">
+    <div className="search-page">
       <h1>Results</h1>
       {successMessage && <div className="success-message">{successMessage}</div>}
       {failureMessage && <div className="error-message">{failureMessage}</div>}

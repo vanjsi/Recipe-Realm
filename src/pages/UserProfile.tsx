@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfile.css';
 import AddRecipe from '../components/AddRecipe';
+import { MdEdit, MdDelete } from 'react-icons/md';
+import { FaRegHeart, FaHeart } from 'react-icons/fa'; 
 
 interface Recipe {
   id: number;
@@ -26,7 +28,7 @@ const UserProfile: React.FC = () => {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
   const [loadingRecipes, setLoadingRecipes] = useState(false);
-  const isLoggedIn = !!localStorage.getItem('jwtToken'); // Check if user is logged in
+  const isLoggedIn = !!localStorage.getItem('jwtToken'); 
 
   useEffect(() => {
     fetchRecipes();
@@ -244,13 +246,13 @@ const UserProfile: React.FC = () => {
           className={`my-recipes-button ${activeTab === 'myRecipes' ? 'active' : ''}`}
           onClick={() => setActiveTab('myRecipes')}
         >
-          My Recipes
+          My recipes
         </button>
         <button 
           className={`favorite-recipes-button ${activeTab === 'favoriteRecipes' ? 'active' : ''}`}
           onClick={() => setActiveTab('favoriteRecipes')}
         >
-          Favorite Recipes
+          Favorite recipes
         </button>
       </div>
 
@@ -273,20 +275,26 @@ const UserProfile: React.FC = () => {
                       </a>
                       <p>{new Date(recipe.createdAt || '').toLocaleDateString()}</p>
                     </div>
-                    <button className="edit-button" onClick={() => handleShowEditRecipe(recipe)}>Edit</button>
-                    <button className="delete-button" onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
-                    <button 
-                      className={`favorite-button ${favoriteRecipes.some(r => r.id === recipe.id) ? 'favorited' : ''}`}
-                      onClick={() => handleFavoriteRecipe(recipe.id)}
+                    <div className="card-actions">
+                    <div 
+                      className="edit-button" 
+                      onClick={() => handleShowEditRecipe(recipe)}
                     >
-                      {favoriteRecipes.some(r => r.id === recipe.id) ? 'Remove from favorite' : 'Favorite'}
-                    </button>
+                      <MdEdit />
+                    </div>
+                    <div 
+                      className="delete-button" 
+                      onClick={() => handleDeleteRecipe(recipe.id)}
+                    >
+                      <MdDelete />
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
 
         {activeTab === 'favoriteRecipes' && (
           <>
@@ -336,7 +344,6 @@ const UserProfile: React.FC = () => {
             } : undefined}
           />
         )}
-
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ const BreakfastPage: React.FC = () => {
       try {
         const response = await axios.get('/recipes');
         const allRecipes = response.data;
-        const breakfastRecipes = allRecipes.filter((recipe: Recipe) => recipe.categoryId === 1); // assuming categoryId for "doručak" is 1
+        const breakfastRecipes = allRecipes.filter((recipe: Recipe) => recipe.categoryId === 1); 
         setRecipes(breakfastRecipes);
       } catch (error) {
         console.error('Error fetching recipes:', error);

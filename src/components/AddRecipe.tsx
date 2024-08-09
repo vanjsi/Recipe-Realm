@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './AddRecipe.css'; 
+import './AddRecipe.css';
 
 interface AddRecipeProps {
   onClose: () => void;
@@ -19,10 +19,27 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues })
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [authorId, setAuthorId] = useState<number>(1); // Default value
-  const [categoryId, setCategoryId] = useState<number>(2); // Default value
+  const [authorId, setAuthorId] = useState<number>(1); 
+  const [categoryId, setCategoryId] = useState<number>(2); 
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
   useEffect(() => {
+    // Učitajte kategorije kada se komponenta učita
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/categories');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const categoriesData = await response.json();
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    
+    fetchCategories();
+
     if (initialValues) {
       setTitle(initialValues.title);
       setDescription(initialValues.description);
@@ -56,6 +73,16 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ onClose, onSave, initialValues })
       <label>
         Steps:
         <textarea value={steps} onChange={(e) => setSteps(e.target.value)} />
+      </label>
+      <label>
+        Category:
+        <select value={categoryId} onChange={(e) => setCategoryId(Number(e.target.value))}>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </label>
       <button className="save-button" onClick={handleSubmit}>Save</button>
       <button className="cancel-button" onClick={onClose}>Close</button>
